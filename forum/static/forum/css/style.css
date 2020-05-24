@@ -1,0 +1,118 @@
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+
+
+ html {
+  scroll-behavior: smooth;
+ }
+.icon-block {
+  padding: 0 15px;
+}
+.icon-block .material-icons {
+	font-size: inherit;
+}
+body{
+  background-color:#212121;
+  color:white;
+}
+.collection{
+  border:0;
+  border-top:1px solid white;
+  border-bottom:1px solid white;
+}
+li{
+  border:0;
+}
+nav{
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+.no-select-extra{
+  user-select:none;
+  -moz-user-select: none;
+  -webkit-user-select:none;
+  -ms-user-select: none;
+}
+.bold{
+  font-weight:bold;
+}
+.pagination{
+  text-align:right;
+}
+span{
+  border:0;
+}
+.align-center-extra{
+  text-align:center;
+}
+.align-left-extra{
+  text-align:left;
+}
+.align-right-extra{
+  text-align:right;
+}
+.wrapit{
+  word-wrap: break-word;
+}
+.forcenoshadow{
+  box-shadow:0;
+  text-shadow: 0;
+}
+
+.link {
+  color:white;
+}
+.link:hover {
+  transition: 0.2s;
+  color: #00aaff;
+}
+#g-recaptcha-response {
+  display: block !important;
+  position: absolute;
+  margin: -78px 0 0 0 !important;
+  width: 302px !important;
+  height: 76px !important;
+  z-index: -999999;
+  opacity: 0;
+}
+#g-recaptcha-response-1 {
+  display: block !important;
+  position: absolute;
+  margin: -78px 0 0 0 !important;
+  width: 302px !important;
+  height: 76px !important;
+  z-index: -999999;
+  opacity: 0;
+}
+
+.threadlist {
+  margin-top:5px;
+}
+
+.inlinedis {
+  display:inline;
+}
+
+.blockdis {
+  display:block;
+}
+
+.threadbody {
+  white-space:pre;
+}
+
+.brand-text {
+  display:inline;
+  font-size:16px;
+  margin: auto;
+  display: -webkit-box;
+}
+.editedstr {
+  display:inline;
+}
