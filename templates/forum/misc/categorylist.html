@@ -1,0 +1,23 @@
+<ul class="collection with-header">
+    <!-- Categories -->
+    <li class="collection-header grey darken-4"><h4>Categories</h4></li>
+    
+    {% url 'sphynx:index' as recentpath%}
+    <li class="collection-item {% if request.path == recentpath %}active{% else %}grey darken-4{% endif %}"><a class="link" href="{% url 'sphynx:index' %}">Recent Threads</a></li>
+    
+    {% for i in categories %}
+    {% url 'sphynx:category' i.pk as cpath%}
+    <li class="collection-item {% if request.path == cpath %}active{% else %}grey darken-4{% endif %}"><a class="link" href="{% url 'sphynx:category' i.pk %}">{{ i }}</a></li>
+    {% endfor %}
+    <!--
+    <li class="collection-item grey darken-4">Main Threads</li>
+    <li class="collection-item active">Games</li>
+    <li class="collection-item grey darken-4">Lounge</li>
+    <li class="collection-item grey darken-4">Recent Threads</li>
+    <li class="collection-header grey darken-4"><h4>Other</h4></li>
+    <li class="collection-item grey darken-4">Programs</li>
+    <li class="collection-item grey darken-4">Forum-games</li>
+    <li class="collection-item grey darken-4">Lorem</li>
+    <li class="collection-item grey darken-4">Ipsum</li>
+    -->
+  </ul>

@@ -1,0 +1,101 @@
+{% extends './base.html' %}
+{% load static %}
+{% block content %}
+
+
+
+      <div class="col s12 m9">
+       
+        <ul class="collection">
+          <li class="collection-item grey darken-4"><h4>{% if current_category %} {{ current_category }} {% else %} Recent Posts {% endif %}</h4></li>
+          {% if current_category and request.user.is_authenticated %}
+          <li class="collection-item grey darken-4">
+            <a href="{% url 'sphynx:newthread' current_category.id %}" class="link" style="text-align:right;display:block;"><p style="margin:0;font-size:15px;display:inline;vertical-align:top;">New Thread</p><i class="material-icons" style="font-size: 22px;">add</i></a>
+          </li>
+          {% endif %}
+          {% if threads %}
+          
+          {% for thread in threads %}
+          <li class="collection-item avatar grey darken-4">
+            <img src="{% static 'forum/pfp/'|add:thread.author.userdetails.profile_pic %}" alt="" class="circle">
+            <a href="{% url 'sphynx:thread' thread.id %}"><span class="title teal-text bold">{{ thread.title }}</span></a>
+            <p class="secondary-content grey darken-4" style="display:inline;text-align:right;margin-right:30px;">{{ thread.posted|timesince }} ago...</p>
+            <div class="blockdis">
+            <a href="{% url 'sphynx:profile' thread.author.id %}" class="link"><p class="inlinedis">{{ thread.author.username }}</p></a>
+            </div>
+            <p class="grey-text">{{ thread.body|truncatechars:80 }} </p>
+            <a href="#!" class="secondary-content grey darken-4"><i class="material-icons">grade</i></a>
+          </li>
+          {% endfor %}
+          
+          {% else %}
+          {% if current_category %}
+          <li class="collection-item grey darken-4"><p>No threads were found... Click <a href="{% url 'sphynx:newthread' current_category.id %}">here</a> to make one!</a></p></li>
+          {% else %}
+          <li class="collection-item grey darken-4"><p>No threads were found... Click</p></li>
+          {% endif %}
+
+          {% endif %}
+
+          <!--<li class="collection-item avatar grey darken-4">
+            <i class="material-icons circle">folder</i>
+            <span class="title teal-text bold">Witcher 3</span>
+            <p>First Line</p>
+            <p class="grey-text">Second Line</p>
+            <a href="#!" class="secondary-content grey darken-4"><i class="material-icons">grade</i></a>
+          </li>
+          <li class="collection-item avatar grey darken-4">
+            <i class="material-icons circle green">insert_chart</i>
+            <span class="title teal-text bold">Barz's house of fun</span>
+            <p>First Line</p>
+            <p class="grey-text">Second Line</p>
+            <a href="#!" class="secondary-content grey darken-4"><i class="material-icons">grade</i></a>
+          </li>
+          <li class="collection-item avatar grey darken-4">
+            <i class="material-icons circle red">play_arrow</i>
+            <span class="title teal-text bold">Blackwake</span>
+            <p>First Line</p>
+            <p class="grey-text">Second Line</p>
+            <a href="#!" class="secondary-content grey darken-4"><i class="material-icons">grade</i></a>
+          </li>
+          <li class="collection-item avatar grey darken-4">
+            <img src="https://materializecss.com/images/yuna.jpg" alt="" class="circle">
+            <span class="title teal-text bold">GTA 5</span>
+            <p>First Line</p>
+            <p class="grey-text">Second Line</p>
+            <a href="#!" class="secondary-content grey darken-4"><i class="material-icons">grade</i></a>
+          </li>
+          <li class="collection-item avatar grey darken-4">
+            <i class="material-icons circle">folder</i>
+            <span class="title teal-text bold">Witcher 3</span>
+            <p>First Line</p>
+            <p class="grey-text">Second Line</p>
+            <a href="#!" class="secondary-content grey darken-4"><i class="material-icons">grade</i></a>
+          </li>
+          <li class="collection-item avatar grey darken-4">
+            <i class="material-icons circle green">insert_chart</i>
+            <span class="title teal-text bold">Barz's house of fun</span>
+            <p>First Line</p>
+            <p class="grey-text">Second Line</p>
+            <a href="#!" class="secondary-content grey darken-4"><i class="material-icons">grade</i></a>
+          </li>
+          <li class="collection-item avatar grey darken-4">
+            <i class="material-icons circle red">play_arrow</i>
+            <span class="title teal-text bold">Blackwake</span>
+            <p>First Line</p>
+            <p class="grey-text">Second Line</p>
+            <a href="#!" class="secondary-content grey darken-4"><i class="material-icons">grade</i></a>
+          </li>-->
+        </ul>
+      </div>
+
+    </div>
+
+
+
+
+
+
+
+
+{% endblock content %}

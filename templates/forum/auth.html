@@ -1,0 +1,88 @@
+{% extends './base.html' %}
+
+{% block head %}
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<style>
+  input[type=text] {
+    color:white;
+  }
+  input[type=email] {
+    color:white;
+  }
+  input[type=password] {
+    color:white;
+  }
+
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    
+  
+        <br><br>
+      </div>
+    </div>
+  
+    {% if errormsg %}
+    <h2 style="text-align:center;" class="red-text">{{ errormsg }}</h2>
+    {% endif %}
+
+    <div class="row container">
+
+      <div class="col s6 grey darken-4">
+        <!-- Grey navigation panel -->
+        <h4>Login</h4>
+        <form method="POST" action="{% url 'sphynx:login' %}">
+        {% csrf_token %}
+        <input type="text" name="next" hidden value="{{ request.GET.next }}">
+        <div class="input-field col s12">
+          <input id="username" name="username" type="text" class="validate white-text" required>
+          <label for="username" class="no-select-extra">Username</label>
+        </div>
+        <div class="input-field col s12">
+          <input id="lpassword" name="password" type="password" class="validate white-text" required>
+          <label for="lpassword">Password</label>
+        </div>
+
+        <div class="g-recaptcha" data-sitekey="6LfvHe4UAAAAAEavzqRDfgKvlKpY_SqUU_A0YKa9" data-theme="dark"></div>
+        <br>
+        <br>
+        <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-top:100px">Submit
+          <i class="material-icons right">send</i>
+        </button>
+    </form>
+      </div>
+  
+      <div class="col s6 col s6 grey darken-4">
+        <!-- Teal page content  -->
+        <h4>Sign Up</h4>
+        <form method="POST" >
+        {% csrf_token %}
+        {% for field in form %}
+        <p>
+          {{ field.label_tag }}<br>
+          {{ field }}
+          {% if field.help_text %}
+            <small style="color: grey">{{ field.help_text }}</small>
+          {% endif %}
+          {% for error in field.errors %}
+            <p style="color: red">{{ error }}</p>
+          {% endfor %}
+        </p>
+      {% endfor %}
+        
+            <div class="g-recaptcha" data-sitekey="6LfvHe4UAAAAAEavzqRDfgKvlKpY_SqUU_A0YKa9" data-theme="dark"></div>
+
+        <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-top:95px;">Submit
+          <i class="material-icons right">send</i>
+        </button>
+        </form>
+      </div>
+  
+    </div>
+
+  </div>
+  <br><br><br>
+{% endblock %}

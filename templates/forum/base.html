@@ -1,0 +1,156 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<title>Sphynx Forums</title>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="{% static 'forum/css/materialize.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="{% static 'forum/css/style.css' %} " type="text/css" rel="stylesheet" media="screen,projection"/>
+  {% block head %}
+  {% endblock %}
+</head>
+<body>
+    
+  <div class="container">
+  <nav class="light-blue lighten-1" role="navigation">
+    <div class="nav-wrapper container no-select-extra">
+      <a id="logo-container" href="{% url 'sphynx:index' %}" class="brand-logo"><i class="material-icons">polymer</i>
+        <p class="brand-text" >Sphynx Forum</p>
+      </a>
+
+      <ul class="right hide-on-med-and-down">
+        {% if request.user.is_authenticated %}
+        <li>Welcome, {{ request.user.username }}</li>
+        {% else %}
+        <li><a href="{% url 'sphynx:auth' %}">Login Or Register</a></li>
+        {% endif %}
+      </ul>
+
+      <ul id="nav-mobile" class="sidenav">
+        <li><a href="{% url 'sphynx:auth' %}">Login Or Register</a></li>
+      </ul>
+      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+  </div>
+  <div class="row container no-select-extra">
+    <div class="col s12 m3">
+        
+        {% if categories %}
+
+        {% include './misc/categorylist.html' %}
+      
+        {% endif %}
+      <br>
+
+      {% if discord %}
+      {% include './misc/discord.html' %}
+      {% endif %}
+      
+    </div>
+
+  {% block content %}
+  {% endblock %}
+  </div>
+
+ {% if pages %}
+  <ul class="pagination container">
+    <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+    <li class="active teal"><a href="#!" class="black-text">1</a></li>
+    <li class="waves-effect"><a href="#!" class="white-text">2</a></li>
+    <li class="waves-effect"><a href="#!" class="white-text">3</a></li>
+    <li class="waves-effect"><a href="#!" class="white-text">4</a></li>
+    <li class="waves-effect"><a href="#!" class="white-text">5</a></li>
+    <li class="disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+  </ul>
+  <br>
+{% endif %}
+
+
+<div class="fixed-action-btn no-select-extra">
+  <a class="btn-floating btn-large red waves-effect waves-light red">
+    <i class="large material-icons">person</i>
+  </a>
+  <ul>
+    <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
+    <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+    <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+    <li><a class="btn-floating blue"><i class="material-icons">settings</i></a></li>
+  </ul>
+</div>
+
+  <footer class="page-footer grey darken-4">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">Company Bio</h5>
+          <p class="grey-text text-lighten-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam, commodi reprehenderit dolorum similique omnis voluptatibus quam est dolore hic eius odio ullam voluptatum dicta consequatur fuga vel molestiae, earum illum!</p>
+
+
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Settings</h5>
+          <ul>
+            <li><a class="white-text" href="#!">Link 1</a></li>
+            <li><a class="white-text" href="#!">Link 2</a></li>
+            <li><a class="white-text" href="#!">Link 3</a></li>
+            <li><a class="white-text" href="#!">Link 4</a></li>
+          </ul>
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Connect</h5>
+          <ul>
+            <li><a class="white-text" href="#!">Link 1</a></li>
+            <li><a class="white-text" href="#!">Link 2</a></li>
+            <li><a class="white-text" href="#!">Link 3</a></li>
+            <li><a class="white-text" href="#!">Link 4</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      Design made by <a class="red-text" href="https://barz.cc">Barz</a>
+      <br>
+      Powered by <a class="red-text" href="https://sphynx.pw">Sphynx</a>
+      </div>
+    </div>
+  </footer>
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="{% static 'forum/js/materialize.js' %}"></script>
+  <script src="{% static 'forum/js/init.js' %}"></script>
+  <script src="https://code.jquery.com/jquery-3.5.0.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.fixed-action-btn');
+    var instances = M.FloatingActionButton.init(elems, {
+      direction: 'left',
+      hoverEnabled: false
+    });
+  });
+  </script>
+  <script>
+      window.onload = function() {
+    var recaptcha = document.querySelector('#g-recaptcha-response');
+
+    if(recaptcha) {
+            recaptcha.setAttribute("required", "required");
+    }
+    var recaptcha = document.querySelector('#g-recaptcha-response-1');
+
+    if(recaptcha) {
+            recaptcha.setAttribute("required", "required");
+    }
+    jQuery(function($){
+        $('.g-recaptcha').attr('data-theme', 'dark');
+        });
+    
+};
+  </script>
+</body>

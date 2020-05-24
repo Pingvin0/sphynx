@@ -1,0 +1,146 @@
+{% extends './base.html' %}
+{% load static %}
+{% block head %}
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    
+
+      </div>
+    </div>
+      <div class="row container">
+          <nav>
+              <div class="nav-wrapper grey darken-4 forcenoshadow">
+                <div class="col s12">
+                  <a href="{% url 'sphynx:category' thread.category.id %}" class="breadcrumb">{{ thread.category }}</a>
+                  <a href="#!" class="breadcrumb">{{ thread.title }}</a>
+                </div>
+              </div>
+            </nav>
+        <div class="col s2">
+          <div class="row">
+              <div class="col">
+                <div class="card blue-grey darken-1">
+                  <div class="card-content white-text align-center-extra">
+                      <img src="{% static 'forum/pfp/'|add:thread.author.userdetails.profile_pic %}" alt="" class="circle z-depth-3" width="140px">
+                    <span class="card-title">{{ thread.author.username }}</span>
+                    <p class="red-text accent-1 bold">{% if thread.author.userdetails.custom_title %} {{ thread.author.userdetails.custom_title }} {% endif %}</p>
+                    <p>{{ thread.author.userdetails.bio }}</p>
+                  </div>
+                  <div class="card-action align-right-extra">
+                    <a href="{% url 'sphynx:profile' thread.author.id %}">Visit Profile</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+                      
+        
+        </div>
+  
+        <div class="col s10">
+         
+          <ul class="collection" id="comment">
+            <li class="collection-item grey darken-4"><h4>{{ thread.title }}</h4></li>
+            <li class="collection-item grey darken-4 wrapit"><p class="threadbody">{{ thread.body }}</p></li>
+          </ul>
+          {% if thread.edited_on %}
+          <p class="editedstr">Edited {{ thread.edited_on|timesince }} ago...</p>
+          {% endif %}
+          {% if permissionToEdit == True %}
+          <div style="display:block;float:right;">
+            <a href="{% url 'sphynx:edit' thread.id %}" class="link" style="text-align:right;display:inline;"><p style="margin:0;font-size:15px;display:inline;vertical-align:top;">Edit</p><i class="material-icons" style="font-size: 18px;vertical-align:sub;">settings</i></a>
+          </div>
+          {% endif %}
+        </div>
+  
+      </div>
+      {% for comment in thread.comment_set.all %}
+      <div class="row container">
+  
+        <div class="col s2">
+            <div class="row">
+                <div class="col">
+                  <div class="card blue-grey darken-1">
+                    <div class="card-content white-text align-center-extra">
+                        <img src="{% static 'forum/pfp/'|add:comment.author.userdetails.profile_pic %}" alt="" class="circle z-depth-3" width="140px">
+                      <span class="card-title">{{ comment.author.username }}</span>
+                      <p class="red-text accent-1 bold">{% if comment.author.userdetails.custom_title %} {{ comment.author.userdetails.custom_title }} {% endif %}</p>
+                      <p>{{ comment.author.userdetails.bio }}</p>
+
+                    </div>
+                    <div class="card-action align-right-extra">
+                      <a href="{% url 'sphynx:profile' comment.author.id %}">Visit Profile</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+                      
+        
+        </div>
+  
+        <div class="col s10">
+         
+          <ul class="collection">
+            <li class="collection-item grey darken-4 wrapit"><p class="threadbody">{{ comment.body }}</p></li>
+          </ul>
+        </div>
+  
+      </div>
+      {% endfor %}
+      
+      {% if request.user.is_authenticated %}
+        <div class="row container">
+  
+          <div class="col s2">
+            <div class="row">
+                <div class="col">
+                  <div class="card blue-grey darken-1">
+                    <div class="card-content white-text align-center-extra">
+                        <img src="{% static 'forum/pfp/'|add:request.user.userdetails.profile_pic %}" alt="" class="circle z-depth-3" width="140px">
+                      <span class="card-title">{{ request.user.username }}</span>
+                      <p class="red-text accent-1 bold">{% if request.user.userdetails.custom_title %} {{ request.user.userdetails.custom_title }} {% endif %}</p>
+                      <p>{{ request.user.userdetails.bio }}</p>
+                    </div>
+                    <div class="card-action align-right-extra">
+                      <a href="{% url 'sphynx:profile' request.user.id %}">Visit Profile</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+                        
+          
+          </div>
+    
+          <div class="col s10">
+           
+            <ul class="collection">
+              <br>
+              <form method="POST" action="{{ commentsite }}">
+              {% csrf_token %}
+              <div class="input-field col s12">
+                  <textarea id="textarea1" name="commentbody" minlength="15" maxlength="500" class="materialize-textarea white-text" rows="5"></textarea>
+                  <label for="textarea1">Textarea</label>
+                </div>
+                <div class="g-recaptcha" data-sitekey="6LfvHe4UAAAAAEavzqRDfgKvlKpY_SqUU_A0YKa9" data-theme="dark"></div>
+                <br>
+                <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-bottom:20px;margin-top:85px">Submit
+                  <i class="material-icons right">send</i>
+                </button>
+              </form>
+            </ul>
+            <br>
+          </div>
+    
+        </div>
+        {% endif %}
+
+  
+
+    
+  </div>
+  
+
+{% endblock %}
